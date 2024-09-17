@@ -1,0 +1,38 @@
+.navbar-nav {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-nav .nav-item {
+    margin-left: 20px;
+  }
+  
+  .navbar .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .nav-right-part {
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-dropdown-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .nav-right-part ul {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav-right-part ul li {
+    margin-left: 20px;
+  }
+  
