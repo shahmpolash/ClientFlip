@@ -161,10 +161,11 @@ const SellerOrders = () => {
                                                             <th>Name</th>
                                                             <th>Product Name</th>
                                                             <th>Amount</th>
-                                                            <th>View Details</th>
-                                                            <th>Add/Edit Note</th>
-                                                            <th>View Buyer Note</th>
+                                                            <th>Details</th>
+                                                            <th>Your Note</th>
+                                                            <th>Buyer's Note</th>
                                                             <th>Update Order</th>
+                                                            <th>Fee (20%)</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -195,7 +196,7 @@ const SellerOrders = () => {
                                                                     <h6 className="mb-1 font-size-13">
                                                                         ${order.packagePrice} USD
                                                                     </h6>
-                                                                    <p className="text-danger text-uppercase mb-0 font-size-11">
+                                                                    <p className="text-success text-uppercase mb-0 font-size-11">
                                                                         <i className="mdi mdi-circle-medium" />
                                                                         {order.paymentStatus}
                                                                     </p>
@@ -363,6 +364,12 @@ const SellerOrders = () => {
                                                                 </td>
                                                                 <td>
                                                                    {order.paymentStatus === 'Paid' ? <Link className="btn btn-primary" to={`/seller/update-order/${order._id}`}>Update</Link>
+                                                                   :
+                                                                   <></>
+                                                                    }
+                                                                </td>
+                                                                <td>
+                                                                   {order.paymentStatus === 'Paid' ? <p className="text-danger"> - ${order.packagePrice * 0.2} USD</p>
                                                                    :
                                                                    <></>
                                                                     }

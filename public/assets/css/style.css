@@ -1587,7 +1587,7 @@ ul {
 
 .widget-cart .widget-cart-inner ul {
   padding: 0;
-  margin: 29px 0 35px;
+ 
 }
 
 .widget-cart .widget-cart-inner ul li {
@@ -3563,10 +3563,17 @@ ul {
 .single-product-wrap .single-product-details p {
   margin: 6px 0 0 0;
 }
+.rating .fa {
+  color: lightgray; /* Default color for unfilled stars */
+}
+
+.rating .fa.checked {
+  color: gold; /* Color for filled stars */
+}
 
 /*****product-tab*****/
 .product-tab {
-  margin: 58px 0 90px;
+  
   border-radius: 10px;
   background-color: white;
   box-shadow: 0px 6px 47px 3px rgba(37, 37, 37, 0.05);

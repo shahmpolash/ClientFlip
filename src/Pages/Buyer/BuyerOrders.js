@@ -140,8 +140,8 @@ const BuyerOrders = () => {
                                                     <td>Review & Rating</td>
                                                     <td>Status</td>
                                                     <td>-</td>
-                                                    <th>Add/Edit Note to Seller</th>
-                                                    <th>View Seller Note</th>
+                                                    <th>Your Note</th>
+                                                    <th>Seller's Note</th>
 
                                                     <thead className="table-light">
                                                         {/* Your table header content */}

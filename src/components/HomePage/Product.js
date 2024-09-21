@@ -237,6 +237,10 @@ const Product = () => {
         },
     ];
 
+    const averageRating = reviews.length > 0
+        ? (reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length).toFixed(1)
+        : 0;
+
     return (
         <>
             <Helmet>
@@ -272,11 +276,20 @@ const Product = () => {
                                         )}
                                     </h4>
                                     Category:
-                                    <Link to={`/category/${products.categorySlug}`}>
+                                    <Link className='ml-1' to={`/category/${products.categorySlug}`}>
                                         {products.category ? products.category : <SkeletonTheme baseColor="#8200dd;" highlightColor="#49009b">
                                             <Skeleton width={40} />
                                         </SkeletonTheme>}
                                     </Link>
+                                    <div>
+                                        Rating: <span className="rating">
+                                            {Array.from({ length: 5 }, (_, index) => (
+                                                <i key={index} className={`fa fa-star${index < averageRating ? ' checked' : ''}`} />
+                                            ))}
+                                           
+                                            <span> {averageRating}</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                             <div className="product-tab">

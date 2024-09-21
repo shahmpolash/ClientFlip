@@ -44,6 +44,7 @@ import UpdateAccessItemForOrder from './Pages/Seller/UpdateAccessItemForOrder';
 import RegisterAsSeller from './Pages/RegisterAsSeller';
 import RegisterAsBuyer from './Pages/RegisterAsBuyer';
 import SellerProductUpdate from './Pages/Seller/SellerProductUpdate';
+import EditProduct from './Pages/Seller/EditProduct';
 
 
 function App() {
@@ -97,6 +98,7 @@ function App() {
         <Route path="/seller/orders" element={<RequireAuth><SellerAuth><SellerOrders></SellerOrders></SellerAuth></RequireAuth>}></Route>
         <Route path="/seller/update-order/:id" element={<RequireAuth><SellerAuth><UpdateAccessItemForOrder></UpdateAccessItemForOrder></SellerAuth></RequireAuth>}></Route>
         <Route path="/seller/products" element={<RequireAuth><SellerAuth><SellerProducts></SellerProducts></SellerAuth></RequireAuth>}></Route>
+        <Route path="/seller/edit-product/:id" element={<RequireAuth><SellerAuth><EditProduct></EditProduct></SellerAuth></RequireAuth>}></Route>
         <Route path="/seller/add-product" element={<RequireAuth><SellerAuth><SellerAddProduct></SellerAddProduct></SellerAuth></RequireAuth>}></Route>
 
 

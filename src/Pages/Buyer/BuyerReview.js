@@ -211,6 +211,7 @@ const BuyerReview = () => {
                                         <div className="col-12">
                                             <div className="single-input-wrap">
                                                 <input
+                                                hidden
                                                     required
                                                     readOnly
                                                     type="text"

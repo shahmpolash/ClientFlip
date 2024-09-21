@@ -32,8 +32,13 @@ const RecentProducts = ({ searchQuery }) => {
   }, []);
 
   const getReviewCount = (productId) => {
+    return reviews.filter((review) => review.productId === productId).length;
+  };
+
+  const getAverageRating = (productId) => {
     const productReviews = reviews.filter((review) => review.productId === productId);
-    return productReviews.length;
+    const totalRating = productReviews.reduce((acc, review) => acc + review.rating, 0);
+    return productReviews.length > 0 ? (totalRating / productReviews.length).toFixed(1) : 0;
   };
 
   const filteredProducts = products.filter((product) =>
@@ -44,91 +49,89 @@ const RecentProducts = ({ searchQuery }) => {
     <>
       {
         loading ?
-        <div className="d-flex justify-content-center align-items-center" style={{ height: '30vh' }}>
-        <div className="spinner-border" role="status" style={{ width: '3rem', height: '3rem' }}>
-          <span className="visually-hidden">Loading...</span>
-        </div>
-      </div>
-      
+          <div className="d-flex justify-content-center align-items-center" style={{ height: '30vh' }}>
+            <div className="spinner-border" role="status" style={{ width: '3rem', height: '3rem' }}>
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>
           :
-          <>{categories.map((category) => {
-            const categorySlug = products.find((product) => product.category === category)?.categorySlug;
-            const categoryProducts = shuffle(filteredProducts.filter((product) => product.category === category));
+          <>
+            {categories.map((category) => {
+              const categorySlug = products.find((product) => product.category === category)?.categorySlug;
+              const categoryProducts = shuffle(filteredProducts.filter((product) => product.category === category));
 
-            if (categoryProducts.length === 0) {
-              return null;
-            }
+              if (categoryProducts.length === 0) {
+                return null;
+              }
 
-            return (
-              <section key={category} className="all-item-area mt-5">
-                <div className="container">
-                  <div className="row">
-                    <div className="col-lg-4">
-                      <div className="section-title">
-                        <h6>{category}</h6>
-                      </div>
-                    </div>
-                    <div className="col-lg-8 mt-2">
-                      <div className="isotope-filters item-isotope-btn text-lg-right">
-                        <button className="button active ml-0">
-                          <a href={`/category/${categorySlug}`}>All Items</a>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="all-item-section all-item-area-2">
+              return (
+                <section key={category} className="all-item-area mt-5">
+                  <div className="container">
                     <div className="row">
-                      {categoryProducts.slice(0, 6).map((product) => (
-                        <div key={product._id} className="all-isotope-item col-lg-4 col-md-6 col-sm-12">
-                          <div className="thumb">
-                            <a className="gallery-fancybox" href={`/product/${product._id}`}>
-                              {loading ? (
-                                <SkeletonTheme baseColor="#8200dd;" highlightColor="#49009b">
-                                  <Skeleton width={370} height={270} style={{ objectFit: 'contain' }} />
-                                </SkeletonTheme>
-                              ) : (
-                                <img src={product.featuredImage} alt={product.productName} width={370} height={270} style={{ objectFit: 'contain' }} />
-                              )}
-                            </a>
-                            <a href={`/product/${product._id}`} className="btn btn-white">
-                              More Details
-                            </a>
-                          </div>
-                          <div className="item-details">
-                            <h6>
-                              <a href={`/product/${product._id}`}>{loading ? <Skeleton width={100} /> : product.productName}</a>
-                            </h6>
-                            <span className="ratting">
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <i className="fa fa-star" />
-                              <span>({getReviewCount(product._id)})</span>
-                            </span>
-                            <p>
-                              <a href={`/category/${product.categorySlug}`}>Category: {loading ? <Skeleton width={60} /> : product.category}</a>
-                            </p>
-                            <div className="author-details d-flex justify-content-center">
-                              <span className="">
-                                <div className="isotope-filters item-isotope-btn text-lg-right">
-                                  <button className="button active ml-0 buy">
-                                    <a href={`/buy/${product._id}`}>Buy Now ${product.price} USD</a>
-                                  </button>
-                                </div>
+                      <div className="col-lg-4">
+                        <div className="section-title">
+                          <h6>{category}</h6>
+                        </div>
+                      </div>
+                      <div className="col-lg-8 mt-2">
+                        <div className="isotope-filters item-isotope-btn text-lg-right">
+                          <button className="button active ml-0">
+                            <a href={`/category/${categorySlug}`}>All Items</a>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="all-item-section all-item-area-2">
+                      <div className="row">
+                        {categoryProducts.slice(0, 6).map((product) => (
+                          <div key={product._id} className="all-isotope-item col-lg-4 col-md-6 col-sm-12">
+                            <div className="thumb">
+                              <a className="gallery-fancybox" href={`/product/${product._id}`}>
+                                {loading ? (
+                                  <SkeletonTheme baseColor="#8200dd;" highlightColor="#49009b">
+                                    <Skeleton width={370} height={270} style={{ objectFit: 'contain' }} />
+                                  </SkeletonTheme>
+                                ) : (
+                                  <img src={product.featuredImage} alt={product.productName} width={370} height={270} style={{ objectFit: 'contain' }} />
+                                )}
+                              </a>
+                              <a href={`/product/${product._id}`} className="btn btn-white">
+                                More Details
+                              </a>
+                            </div>
+                            <div className="item-details">
+                              <h6>
+                                <a href={`/product/${product._id}`}>{loading ? <Skeleton width={100} /> : product.productName}</a>
+                              </h6>
+                              <span className="rating">
+                                {Array.from({ length: 5 }, (_, index) => (
+                                  <i key={index} className={`fa fa-star${index < getAverageRating(product._id) ? ' checked' : ''}`} />
+                                ))}
+                                <span> ({getReviewCount(product._id)})</span>
                               </span>
+                              <p>
+                                <a href={`/category/${product.categorySlug}`}>Category: {loading ? <Skeleton width={60} /> : product.category}</a>
+                              </p>
+                              <div className="author-details d-flex justify-content-center">
+                                <span className="">
+                                  <div className="isotope-filters item-isotope-btn text-lg-right">
+                                    <button className="button active ml-0 buy">
+                                      <a href={`/buy/${product._id}`}>Buy Now ${product.price} USD</a>
+                                    </button>
+                                  </div>
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
+                        ))} 
+                      </div>
                     </div>
                   </div>
-                </div>
-              </section>
-            );
-          })}</>
+                </section>
+              );
+            })}
+          </>
       }
-
     </>
   );
 };

@@ -33,7 +33,10 @@ const SellerDashboard = () => {
     }, [user]);
 
     const paidOrders = orders.filter(order => order.paymentStatus === 'Paid');
-    const totalSalesAmount = paidOrders.reduce((total, order) => total + parseFloat(order.packagePrice), 0).toFixed(2);
+    const totalSalesAmount = paidOrders.reduce((total, order) => {
+        const flipbundleCharge = parseFloat(order.packagePrice) * 0.8; // Apply 20% discount
+        return total + flipbundleCharge;
+      }, 0).toFixed(2);
 
     const currentBalanceNumber = parseFloat(userInfo.currentBalance);
     const formattedBalance = isNaN(currentBalanceNumber) ? '0.00' : currentBalanceNumber.toFixed(2);
